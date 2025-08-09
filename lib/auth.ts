@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { query } from "./database"
 
-const JWT_SECRET = "JYT"
+const JWT_SECRET = process.env.JWT_SECRET || "JYT-ON-TOP"
 
 export interface User {
   id: number
