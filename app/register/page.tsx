@@ -32,7 +32,7 @@ export default function RegisterPage() {
       ...prev,
       [e.target.name]: e.target.value,
     }))
-    // Clear errors when user starts typing
+    
     if (error) setError("")
   }
 
@@ -114,7 +114,7 @@ export default function RegisterPage() {
   }
 
   if (user) {
-    return null // Will redirect
+    return null 
   }
 
   return (
