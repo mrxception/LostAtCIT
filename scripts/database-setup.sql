@@ -47,13 +47,13 @@ CREATE TABLE IF NOT EXISTS messages (
     FOREIGN KEY (parent_id) REFERENCES messages(id) ON DELETE CASCADE
 );
 
--- Create indexes for better performance
-CREATE INDEX idx_messages_parent_id ON messages(parent_id);
-CREATE INDEX idx_messages_item_id ON messages(item_id);
-CREATE INDEX idx_messages_receiver_id ON messages(receiver_id);
-CREATE INDEX idx_items_user_id ON items(user_id);
-CREATE INDEX idx_items_status ON items(status);
-CREATE INDEX idx_items_type ON items(type);
+-- Create indexes for better performance (only if they don't exist)
+CREATE INDEX IF NOT EXISTS idx_messages_parent_id ON messages(parent_id);
+CREATE INDEX IF NOT EXISTS idx_messages_item_id ON messages(item_id);
+CREATE INDEX IF NOT EXISTS idx_messages_receiver_id ON messages(receiver_id);
+CREATE INDEX IF NOT EXISTS idx_items_user_id ON items(user_id);
+CREATE INDEX IF NOT EXISTS idx_items_status ON items(status);
+CREATE INDEX IF NOT EXISTS idx_items_type ON items(type);
 
 -- Insert default admin user
 INSERT IGNORE INTO users (name, email, password, role) 
