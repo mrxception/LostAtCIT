@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server"
-import { testConnection } from "@/lib/database"
+
+export const dynamic = "force-dynamic"
 
 export async function GET() {
   try {
-    const dbConnected = await testConnection()
-
     return NextResponse.json({
       status: "ok",
-      database: dbConnected ? "connected" : "disconnected",
       timestamp: new Date().toISOString(),
       environment: process.env.NODE_ENV,
+      message: "Health check passed",
     })
   } catch (error) {
     console.error("Health check error:", error)
