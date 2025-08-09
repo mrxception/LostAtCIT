@@ -1,0 +1,60 @@
+-- Create database and tables for CIT Lost & Found
+CREATE DATABASE IF NOT EXISTS cit_lost_found;
+USE cit_lost_found;
+
+-- Users table
+CREATE TABLE IF NOT EXISTS users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('user','admin') DEFAULT 'user',
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Items table
+CREATE TABLE IF NOT EXISTS items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    user_id INT NOT NULL,
+    type ENUM('lost','found') NOT NULL,
+    name VARCHAR(200) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+    description TEXT,
+    location VARCHAR(200),
+    status ENUM('pending','approved','returned') DEFAULT 'pending',
+    image_path VARCHAR(255),
+    cloudinary_public_id VARCHAR(255),
+    date_reported DATE NOT NULL,
+    date_lost_found DATE NOT NULL,
+    contact_info VARCHAR(255),
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+-- Messages table
+CREATE TABLE IF NOT EXISTS messages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
+    item_id INT NOT NULL,
+    parent_id INT NULL,
+    content TEXT NOT NULL,
+    timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
+    is_read TINYINT(1) DEFAULT 0,
+    FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (item_id) REFERENCES items(id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_id) REFERENCES messages(id) ON DELETE CASCADE
+);
+
+-- Create indexes for better performance
+CREATE INDEX idx_messages_parent_id ON messages(parent_id);
+CREATE INDEX idx_messages_item_id ON messages(item_id);
+CREATE INDEX idx_messages_receiver_id ON messages(receiver_id);
+CREATE INDEX idx_items_user_id ON items(user_id);
+CREATE INDEX idx_items_status ON items(status);
+CREATE INDEX idx_items_type ON items(type);
+
+-- Insert default admin user
+INSERT IGNORE INTO users (name, email, password, role) 
+VALUES ('Admin', 'admin@cit.edu', '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', 'admin');
