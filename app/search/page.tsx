@@ -113,78 +113,77 @@ export default function SearchPage() {
 
       <div className="card" style={{ marginBottom: "2rem" }}>
         <form className="search-form" onSubmit={(e) => e.preventDefault()}>
-          <div className="form-group">
-            <label htmlFor="search" className="form-label">
-              Search
-            </label>
-            <input
-              type="text"
-              id="search"
-              className="form-input"
-              placeholder="Search items..."
-              value={filters.search}
-              onChange={(e) => handleFilterChange("search", e.target.value)}
-            />
+          <div className="search-form-grid">
+            <div className="form-group">
+              <label htmlFor="search" className="form-label">
+                Search
+              </label>
+              <input
+                type="text"
+                id="search"
+                className="form-input"
+                placeholder="Search items..."
+                value={filters.search}
+                onChange={(e) => handleFilterChange("search", e.target.value)}
+              />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="category" className="form-label">
+                Category
+              </label>
+              <select
+                id="category"
+                className="form-select"
+                value={filters.category}
+                onChange={(e) => handleFilterChange("category", e.target.value)}
+              >
+                <option value="">All Categories</option>
+                {categories.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="type" className="form-label">
+                Type
+              </label>
+              <select
+                id="type"
+                className="form-select"
+                value={filters.type}
+                onChange={(e) => handleFilterChange("type", e.target.value)}
+              >
+                <option value="">All Types</option>
+                <option value="lost">Lost</option>
+                <option value="found">Found</option>
+              </select>
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="location" className="form-label">
+                Location
+              </label>
+              <select
+                id="location"
+                className="form-select"
+                value={filters.location}
+                onChange={(e) => handleFilterChange("location", e.target.value)}
+              >
+                <option value="">All Locations</option>
+                {locations.map((location) => (
+                  <option key={location} value={location}>
+                    {location}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
-          <div className="form-group">
-            <label htmlFor="category" className="form-label">
-              Category
-            </label>
-            <select
-              id="category"
-              className="form-select"
-              value={filters.category}
-              onChange={(e) => handleFilterChange("category", e.target.value)}
-            >
-              <option value="">All Categories</option>
-              {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="type" className="form-label">
-              Type
-            </label>
-            <select
-              id="type"
-              className="form-select"
-              value={filters.type}
-              onChange={(e) => handleFilterChange("type", e.target.value)}
-            >
-              <option value="">All Types</option>
-              <option value="lost">Lost</option>
-              <option value="found">Found</option>
-            </select>
-          </div>
-
-          <div className="form-group">
-            <label htmlFor="location" className="form-label">
-              Location
-            </label>
-            <select
-              id="location"
-              className="form-select"
-              value={filters.location}
-              onChange={(e) => handleFilterChange("location", e.target.value)}
-            >
-              <option value="">All Locations</option>
-              {locations.map((location) => (
-                <option key={location} value={location}>
-                  {location}
-                </option>
-              ))}
-            </select>
-          </div>
-
-          <div
-              className="form-actions"
-              style={{ display: "flex", gap: "1rem", justifyContent: "flex-end", marginTop: "2rem" }}
-            >
+          <div className="search-form-actions">
             <button type="button" className="btn btn-primary" onClick={fetchItems} disabled={searching}>
               {searching ? (
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>

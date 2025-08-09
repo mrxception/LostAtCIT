@@ -61,7 +61,7 @@ export default function ReportPage() {
       setImage(file)
       setError("")
 
-      
+      // Create preview
       const reader = new FileReader()
       reader.onload = (e) => {
         setImagePreview(e.target?.result as string)
@@ -91,7 +91,7 @@ export default function ReportPage() {
       let imageUrl = ""
       let cloudinaryPublicId = ""
 
-      
+      // Upload image to Cloudinary if provided
       if (image) {
         setUploadProgress("Uploading image...")
         const uploadResult = await uploadToCloudinary(image)
@@ -109,7 +109,7 @@ export default function ReportPage() {
 
       setUploadProgress("Submitting report...")
 
-      
+      // Submit form data
       const response = await fetch("/api/items", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -157,7 +157,7 @@ export default function ReportPage() {
   }
 
   if (!user) {
-    return null 
+    return null // Will redirect
   }
 
   return (
@@ -206,7 +206,7 @@ export default function ReportPage() {
 
         <div className="card">
           <form onSubmit={handleSubmit}>
-            <div className="grid grid-2" style={{ gap: "2rem" }}>
+            <div className="report-form-grid">
               <div>
                 <div className="form-group">
                   <label htmlFor="type" className="form-label">
@@ -375,10 +375,7 @@ export default function ReportPage() {
               />
             </div>
 
-            <div
-              className="form-actions"
-              style={{ display: "flex", gap: "1rem", justifyContent: "flex-end", marginTop: "2rem" }}
-            >
+            <div className="report-form-actions">
               <Link href="/dashboard" className="btn btn-secondary">
                 Cancel
               </Link>
