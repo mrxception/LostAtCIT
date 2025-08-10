@@ -122,7 +122,7 @@ export default function AdminPage() {
     )
   }
 
-  if (!user || user.role !== "admin") {
+  if (!user || (user.role !== "admin" && user.role !== "super_admin")) {
     return null
   }
 
