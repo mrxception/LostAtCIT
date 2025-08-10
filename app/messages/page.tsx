@@ -107,7 +107,7 @@ export default function MessagesPage() {
   const markAsRead = async (itemId: number) => {
     try {
       await fetch(`/api/messages/mark-read/${itemId}`, { method: "POST" })
-      fetchConversations() // Refresh to update unread counts
+      fetchConversations() 
     } catch (error) {
       console.error("Failed to mark as read:", error)
     }
@@ -119,12 +119,12 @@ export default function MessagesPage() {
 
     setSending(true)
     try {
-      // Find the other participant in the conversation
+      
       const otherParticipants = messages
         .map((msg) => (msg.sender_id === user.id ? msg.receiver_id : msg.sender_id))
         .filter((id) => id !== user.id)
 
-      // Get the most recent other participant, or fall back to item owner
+      
       const receiverId =
         otherParticipants.length > 0 ? otherParticipants[otherParticipants.length - 1] : itemDetails.user_id
 
@@ -163,7 +163,7 @@ export default function MessagesPage() {
   }
 
   if (!user) {
-    return null // Will redirect
+    return null 
   }
 
   return (

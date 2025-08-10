@@ -2,13 +2,13 @@ import bcrypt from "bcryptjs"
 import jwt from "jsonwebtoken"
 import { query } from "./database"
 
-const JWT_SECRET = process.env.JWT_SECRET || "JYT-ON-TOP"
+const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key"
 
 export interface User {
   id: number
   name: string
   email: string
-  role: "user" | "admin"
+  role: "user" | "admin" | "super_admin"
   created_at: string
 }
 

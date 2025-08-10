@@ -14,7 +14,7 @@ export default function Navigation() {
   useEffect(() => {
     if (user) {
       fetchUnreadCount()
-      const interval = setInterval(fetchUnreadCount, 30000) // Check every 30 seconds
+      const interval = setInterval(fetchUnreadCount, 30000) 
       return () => clearInterval(interval)
     }
   }, [user])
@@ -92,10 +92,17 @@ export default function Navigation() {
                     Messages {unreadCount > 0 && <span className="unread-badge">{unreadCount}</span>}
                   </Link>
                 </li>
-                {user.role === "admin" && (
+                {(user.role === "admin" || user.role === "super_admin") && (
                   <li>
                     <Link href="/admin" onClick={closeMobileMenu}>
                       Admin Panel
+                    </Link>
+                  </li>
+                )}
+                {user.role === "super_admin" && (
+                  <li>
+                    <Link href="/super-admin" onClick={closeMobileMenu}>
+                      Super Admin
                     </Link>
                   </li>
                 )}

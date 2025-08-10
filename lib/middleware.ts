@@ -33,8 +33,20 @@ export function requireAdmin(handler: Function) {
   return async (request: NextRequest, context: any) => {
     const user = await getAuthUser(request)
 
-    if (!user || user.role !== "admin") {
+    if (!user || (user.role !== "admin" && user.role !== "super_admin")) {
       return NextResponse.json({ error: "Admin access required" }, { status: 403 })
+    }
+
+    return handler(request, { ...context, user })
+  }
+}
+
+export function requireSuperAdmin(handler: Function) {
+  return async (request: NextRequest, context: any) => {
+    const user = await getAuthUser(request)
+
+    if (!user || user.role !== "super_admin") {
+      return NextResponse.json({ error: "Super Admin access required" }, { status: 403 })
     }
 
     return handler(request, { ...context, user })

@@ -378,10 +378,7 @@ export default function EditItemPage() {
               </p>
             </div>
 
-            <div
-              className="form-actions"
-              style={{ display: "flex", gap: "1rem", justifyContent: "flex-end", marginTop: "2rem" }}
-            >
+            <div className="edit-form-actions">
               <Link href="/dashboard" className="btn btn-secondary">
                 Cancel
               </Link>
