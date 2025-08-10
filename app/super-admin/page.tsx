@@ -289,7 +289,7 @@ export default function SuperAdminPage() {
           }}
         >
           <h3 style={{ color: "var(--primary-maroon)", marginBottom: "1rem", fontSize: "1.1rem" }}>
-            Role Management Rules
+             Role Management Rules
           </h3>
           <ul style={{ color: "var(--gray-700)", lineHeight: 1.6, margin: 0, paddingLeft: "1.5rem" }}>
             <li>
