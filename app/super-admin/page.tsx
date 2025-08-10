@@ -95,6 +95,11 @@ export default function SuperAdminPage() {
     }
   }
 
+  const canModifyUser = (userData: User) => {
+    // Cannot modify super admin users
+    return userData.role !== "super_admin"
+  }
+
   if (loading || dataLoading) {
     return (
       <div className="container" style={{ marginTop: "4rem", textAlign: "center" }}>
@@ -144,35 +149,41 @@ export default function SuperAdminPage() {
                     })}
                   </td>
                   <td>
-                    <div className="btn-group" style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-                      {userData.role !== "user" && (
-                        <button
-                          onClick={() => handleRoleChange(userData.id, "user")}
-                          className="btn btn-sm btn-secondary"
-                          disabled={updatingUserId === userData.id}
-                        >
-                          {updatingUserId === userData.id ? <LoadingSpinner size="sm" /> : "Make User"}
-                        </button>
-                      )}
-                      {userData.role !== "admin" && (
-                        <button
-                          onClick={() => handleRoleChange(userData.id, "admin")}
-                          className="btn btn-sm btn-warning"
-                          disabled={updatingUserId === userData.id}
-                        >
-                          {updatingUserId === userData.id ? <LoadingSpinner size="sm" /> : "Make Admin"}
-                        </button>
-                      )}
-                      {userData.role !== "super_admin" && userData.id !== user.id && (
-                        <button
-                          onClick={() => handleRoleChange(userData.id, "super_admin")}
-                          className="btn btn-sm btn-danger"
-                          disabled={updatingUserId === userData.id}
-                        >
-                          {updatingUserId === userData.id ? <LoadingSpinner size="sm" /> : "Make Super Admin"}
-                        </button>
-                      )}
-                    </div>
+                    {canModifyUser(userData) ? (
+                      <div className="btn-group" style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+                        {userData.role !== "user" && (
+                          <button
+                            onClick={() => handleRoleChange(userData.id, "user")}
+                            className="btn btn-sm btn-secondary"
+                            disabled={updatingUserId === userData.id}
+                          >
+                            {updatingUserId === userData.id ? <LoadingSpinner size="sm" /> : "Make User"}
+                          </button>
+                        )}
+                        {userData.role !== "admin" && (
+                          <button
+                            onClick={() => handleRoleChange(userData.id, "admin")}
+                            className="btn btn-sm btn-warning"
+                            disabled={updatingUserId === userData.id}
+                          >
+                            {updatingUserId === userData.id ? <LoadingSpinner size="sm" /> : "Make Admin"}
+                          </button>
+                        )}
+                        {userData.role !== "super_admin" && userData.id !== user.id && (
+                          <button
+                            onClick={() => handleRoleChange(userData.id, "super_admin")}
+                            className="btn btn-sm btn-danger"
+                            disabled={updatingUserId === userData.id}
+                          >
+                            {updatingUserId === userData.id ? <LoadingSpinner size="sm" /> : "Make Super Admin"}
+                          </button>
+                        )}
+                      </div>
+                    ) : (
+                      <span style={{ color: "var(--gray-600)", fontSize: "0.9rem", fontStyle: "italic" }}>
+                        Protected Role
+                      </span>
+                    )}
                   </td>
                 </tr>
               ))}
@@ -203,53 +214,61 @@ export default function SuperAdminPage() {
                   </div>
                 </div>
 
-                <div className="mobile-user-actions">
-                  {userData.role !== "user" && (
-                    <button
-                      onClick={() => handleRoleChange(userData.id, "user")}
-                      className="btn btn-sm btn-secondary"
-                      disabled={updatingUserId === userData.id}
-                    >
-                      {updatingUserId === userData.id ? (
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-                          <LoadingSpinner size="sm" />
-                        </div>
-                      ) : (
-                        "Make User"
-                      )}
-                    </button>
-                  )}
-                  {userData.role !== "admin" && (
-                    <button
-                      onClick={() => handleRoleChange(userData.id, "admin")}
-                      className="btn btn-sm btn-warning"
-                      disabled={updatingUserId === userData.id}
-                    >
-                      {updatingUserId === userData.id ? (
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-                          <LoadingSpinner size="sm" />
-                        </div>
-                      ) : (
-                        "Make Admin"
-                      )}
-                    </button>
-                  )}
-                  {userData.role !== "super_admin" && userData.id !== user.id && (
-                    <button
-                      onClick={() => handleRoleChange(userData.id, "super_admin")}
-                      className="btn btn-sm btn-danger"
-                      disabled={updatingUserId === userData.id}
-                    >
-                      {updatingUserId === userData.id ? (
-                        <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
-                          <LoadingSpinner size="sm" />
-                        </div>
-                      ) : (
-                        "Make Super Admin"
-                      )}
-                    </button>
-                  )}
-                </div>
+                {canModifyUser(userData) ? (
+                  <div className="mobile-user-actions">
+                    {userData.role !== "user" && (
+                      <button
+                        onClick={() => handleRoleChange(userData.id, "user")}
+                        className="btn btn-sm btn-secondary"
+                        disabled={updatingUserId === userData.id}
+                      >
+                        {updatingUserId === userData.id ? (
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                            <LoadingSpinner size="sm" />
+                          </div>
+                        ) : (
+                          "Make User"
+                        )}
+                      </button>
+                    )}
+                    {userData.role !== "admin" && (
+                      <button
+                        onClick={() => handleRoleChange(userData.id, "admin")}
+                        className="btn btn-sm btn-warning"
+                        disabled={updatingUserId === userData.id}
+                      >
+                        {updatingUserId === userData.id ? (
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                            <LoadingSpinner size="sm" />
+                          </div>
+                        ) : (
+                          "Make Admin"
+                        )}
+                      </button>
+                    )}
+                    {userData.role !== "super_admin" && userData.id !== user.id && (
+                      <button
+                        onClick={() => handleRoleChange(userData.id, "super_admin")}
+                        className="btn btn-sm btn-danger"
+                        disabled={updatingUserId === userData.id}
+                      >
+                        {updatingUserId === userData.id ? (
+                          <div style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}>
+                            <LoadingSpinner size="sm" />
+                          </div>
+                        ) : (
+                          "Make Super Admin"
+                        )}
+                      </button>
+                    )}
+                  </div>
+                ) : (
+                  <div className="mobile-user-protected">
+                    <span style={{ color: "var(--gray-600)", fontSize: "0.9rem", fontStyle: "italic" }}>
+                      🔒 Protected Role - Cannot be modified
+                    </span>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -260,6 +279,33 @@ export default function SuperAdminPage() {
             <p style={{ color: "var(--gray-600)" }}>No users found.</p>
           </div>
         )}
+
+        <div
+          className="card"
+          style={{
+            marginTop: "2rem",
+            backgroundColor: "var(--light-gold)",
+            border: "1px solid var(--primary-gold)",
+          }}
+        >
+          <h3 style={{ color: "var(--primary-maroon)", marginBottom: "1rem", fontSize: "1.1rem" }}>
+            ℹ️ Role Management Rules
+          </h3>
+          <ul style={{ color: "var(--gray-700)", lineHeight: 1.6, margin: 0, paddingLeft: "1.5rem" }}>
+            <li>
+              <strong>Super Admin roles</strong> are protected and cannot be modified for security reasons
+            </li>
+            <li>
+              <strong>Regular users and admins</strong> can have their roles changed as needed
+            </li>
+            <li>
+              <strong>Only Super Admins</strong> can access this panel and manage user roles
+            </li>
+            <li>
+              <strong>Role changes</strong> take effect immediately and will affect user permissions
+            </li>
+          </ul>
+        </div>
       </div>
     </main>
   )

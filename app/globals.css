@@ -1114,6 +1114,12 @@ body {
   text-align: center;
 }
 
+.mobile-user-protected {
+  padding-top: 1rem;
+  border-top: 1px solid var(--gray-200);
+  text-align: center;
+}
+
 @media (max-width: 1024px) {
   .grid-4 {
     grid-template-columns: repeat(2, 1fr);

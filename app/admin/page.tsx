@@ -48,12 +48,12 @@ export default function AdminPage() {
   const [actionLoading, setActionLoading] = useState<number | null>(null)
 
   useEffect(() => {
-    if (!loading && (!user || user.role !== "admin")) {
-      router.push("/")
-    } else if (user && user.role === "admin") {
-      fetchAdminData()
-      const interval = setInterval(fetchAdminData, 30000)
-      return () => clearInterval(interval)
+    if (!loading && (!user || (user.role !== "admin" && user.role !== "super_admin"))) {
+      router.push("/");
+    } else if (user && (user.role === "admin" || user.role === "super_admin")) {
+      fetchAdminData();
+      const interval = setInterval(fetchAdminData, 30000);
+      return () => clearInterval(interval);
     }
   }, [user, loading, router])
 
@@ -123,14 +123,13 @@ export default function AdminPage() {
   }
 
   if (!user || user.role !== "admin") {
-    return null 
+    return null
   }
 
   return (
     <main className="container" style={{ marginTop: "2rem", marginBottom: "2rem", paddingBottom: "2rem" }}>
       <h1 style={{ color: "var(--primary-maroon)", marginBottom: "2rem" }}>Admin Panel</h1>
 
-      {/* Centered Stats */}
       <div style={{ display: "flex", justifyContent: "center", marginBottom: "3rem" }}>
         <div className="stats" style={{ maxWidth: "800px", width: "100%" }}>
           <div className="stat-item">
