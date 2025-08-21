@@ -2,9 +2,9 @@ import mysql from "mysql2/promise"
 
 const dbConfig = {
   host: process.env.DB_HOST || "sql12.freesqldatabase.com",
-  user: process.env.DB_USER || "sql12794343",
-  password: process.env.DB_PASSWORD || "txXreTayfU",
-  database: process.env.DB_NAME || "sql12794343",
+  user: process.env.DB_USER || "sql12795658",
+  password: process.env.DB_PASSWORD || "zbvXDXeklA",
+  database: process.env.DB_NAME || "sql12795658",
   waitForConnections: true,
   connectionLimit: 10,
   queueLimit: 0,
